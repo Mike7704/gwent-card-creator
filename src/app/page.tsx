@@ -1,13 +1,36 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import Card from "@/components/Card";
 import CardInputForm from "@/components/CardInputForm";
 
 export default function Home() {
-  async function handleFormInput() {
-    console.log("Test");
-  }
+  const [cardData, setCardData] = useState({
+    name: "",
+    quote: "",
+    faction: "Neutral",
+    type: "Standard",
+    strength: "0",
+    range: "Melee",
+    ability: "None",
+    image: "/images/ImageNotFound.png",
+  });
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setCardData({ ...cardData, [name]: value });
+  };
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        setCardData({ ...cardData, image: event.target?.result as string });
+      };
+      reader.readAsDataURL(e.target.files[0]);
+    }
+  };
 
   return (
     <div
@@ -17,36 +40,16 @@ export default function Home() {
       <header className="w-full p-4 flex justify-center">
         <Image src={"/images/logo.png"} alt={`logo`} width={321} height={210} />
       </header>
-      <main className="container mx-auto p-4 flex-grow flex">
-        <div className="w-1/2 p-4">
-          <Card
-            name="Name"
-            quote="Quote"
-            faction="Monsters"
-            type="Hero"
-            strength="10"
-            range="Melee"
-            ability="Morale"
-            image="/images/ImageNotFound.png"
-          />
+      <main className="container mx-auto p-4 flex-grow flex flex-col md:flex-row">
+        <div className="flex-1 p-4 flex justify-center items-center">
+          <Card {...cardData} />
         </div>
-        <div className="w-1/2 p-4">
-          <CardInputForm
-            name=""
-            quote=""
-            strength=""
-            faction=""
-            type=""
-            range=""
-            ability=""
-            image=""
-            onInputChange={handleFormInput}
-            onImageChange={handleFormInput}
-          />
+        <div className="flex-1 p-4 flex justify-center items-center">
+          <CardInputForm {...cardData} onInputChange={handleInputChange} onImageChange={handleImageChange} />
         </div>
       </main>
-      <footer className="w-full p-4 text-center text-white">
-        <p>Michael Cowley</p>
+      <footer className="w-full p-4 text-center text-white border-t border-white opacity-25">
+        <p>Gwent Card Creator 2025 - Michael Cowley</p>
       </footer>
     </div>
   );
