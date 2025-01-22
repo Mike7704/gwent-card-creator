@@ -61,7 +61,7 @@ const CardInputForm: React.FC<CardInputFormProps> = ({
             <option value="Neutral">Neutral</option>
             <option value="Northern Realms">Northern Realms</option>
             <option value="Nilfgaard">Nilfgaard</option>
-            <option value="SociaTael">Socia&apos;Tael</option>
+            <option value="ScoiaTael">Scoia&apos;Tael</option>
             <option value="Monsters">Monsters</option>
             <option value="Skellige">Skellige</option>
           </select>
