@@ -37,7 +37,7 @@ export default function Home() {
       className="min-h-screen flex flex-col bg-cover bg-center"
       style={{ backgroundImage: "url('/images/background.png')" }}
     >
-      <header className="w-full p-4 flex justify-center">
+      <header className="w-full p-2 flex justify-center">
         <Image src={"/images/logo.png"} alt={`logo`} width={321} height={210} />
       </header>
       <main className="container mx-auto p-4 flex-grow flex flex-col md:flex-row">
@@ -48,7 +48,7 @@ export default function Home() {
           <CardInputForm {...cardData} onInputChange={handleInputChange} onImageChange={handleImageChange} />
         </div>
       </main>
-      <footer className="w-full p-4 text-center text-white border-t border-white opacity-25">
+      <footer className="w-full p-2 text-center text-white border-t border-white opacity-25">
         <p>Gwent Card Creator 2025 - Michael Cowley</p>
       </footer>
     </div>

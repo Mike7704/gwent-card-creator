@@ -89,8 +89,10 @@ const CardInputForm: React.FC<CardInputFormProps> = ({
             Strength
           </label>
           <input
-            type="text"
+            type="number"
             name="strength"
+            min={-99}
+            max={99}
             value={strength}
             onChange={onInputChange}
             className="input-field p-2 border border-gray-300 rounded w-full"

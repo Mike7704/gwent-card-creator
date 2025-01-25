@@ -9,6 +9,7 @@ export const factionBorders = {
 
 export const typeBorders = {
   Hero: "/images/border/border_hero.png",
+  Leader: "/images/border/border_special.png",
   Special: "/images/border/border_special.png",
 };
 
