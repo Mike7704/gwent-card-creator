@@ -52,11 +52,17 @@ const Card: React.FC<CardProps> = ({ name, quote, faction, type, strength, range
         ? getImage(factionBorders, faction, 370, 575, "absolute top-0 left-0 h-[575px]")
         : getImage(typeBorders, type, 370, 575, "absolute top-0 left-0 h-[575px]")}
       {(type === "Standard" || type === "Hero") && getImage(typeStrengthIcon, type, 152, 152, "absolute top-0 left-0")}
-      {getImage(rangeIcons, range, 103, 115, "absolute top-[120px] left-0")}
+      {(type === "Standard" || type === "Hero") && getImage(rangeIcons, range, 103, 115, "absolute top-[120px] left-0")}
       {getImage(abilityIcons, ability, 103, 115, "absolute top-[220px] left-0")}
-      <p className="absolute top-[18px] left-[52px] transform -translate-x-1/2 text-center text-black font-calibri text-[50px]">
-        {strength}
-      </p>
+      {(type === "Standard" || type === "Hero") && (
+        <p
+          className={`absolute top-[18px] left-[52px] transform -translate-x-1/2 text-center font-calibri text-[50px] ${
+            type === "Hero" ? "text-white" : "text-black"
+          }`}
+        >
+          {strength}
+        </p>
+      )}
       <p
         className="absolute top-[456px] left-0 w-full text-center text-black font-calibri text-lg font-semibold"
         style={{ textShadow: "3px 1px 1px white" }}

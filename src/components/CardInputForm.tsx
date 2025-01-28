@@ -1,3 +1,6 @@
+"use client";
+import { useState } from "react";
+
 interface CardInputFormProps {
   name: string;
   quote: string;
@@ -22,6 +25,31 @@ const CardInputForm: React.FC<CardInputFormProps> = ({
   onInputChange,
   onImageChange,
 }) => {
+  const [formData, setFormData] = useState({
+    name,
+    quote,
+    faction,
+    type,
+    strength,
+    range,
+    ability,
+  });
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => {
+      const updatedData = { ...prevData, [name]: value };
+      // Reset range when changing the card type
+      if (name === "type" && (value === "Leader" || value === "Special")) {
+        updatedData.range = "None";
+      } else if (name === "type" && formData.range === "None") {
+        updatedData.range = "Melee";
+      }
+      return updatedData;
+    });
+    onInputChange(e); // Call the passed in onInputChange prop
+  };
+
   return (
     <form className="card-input-form flex flex-col space-y-4">
       <div className="flex flex-col">
@@ -31,8 +59,8 @@ const CardInputForm: React.FC<CardInputFormProps> = ({
         <input
           type="text"
           name="name"
-          value={name}
-          onChange={onInputChange}
+          value={formData.name}
+          onChange={handleInputChange}
           className="input-field p-2 border border-gray-300 rounded"
         />
       </div>
@@ -42,8 +70,8 @@ const CardInputForm: React.FC<CardInputFormProps> = ({
         </label>
         <textarea
           name="quote"
-          value={quote}
-          onChange={onInputChange}
+          value={formData.quote}
+          onChange={handleInputChange}
           className="input-field p-2 border border-gray-300 rounded"
         ></textarea>
       </div>
@@ -54,8 +82,8 @@ const CardInputForm: React.FC<CardInputFormProps> = ({
           </label>
           <select
             name="faction"
-            value={faction}
-            onChange={onInputChange}
+            value={formData.faction}
+            onChange={handleInputChange}
             className="input-field p-2 border border-gray-300 rounded w-full"
           >
             <option value="Neutral">Neutral</option>
@@ -72,8 +100,8 @@ const CardInputForm: React.FC<CardInputFormProps> = ({
           </label>
           <select
             name="type"
-            value={type}
-            onChange={onInputChange}
+            value={formData.type}
+            onChange={handleInputChange}
             className="input-field p-2 border border-gray-300 rounded w-full"
           >
             <option value="Standard">Standard</option>
@@ -93,8 +121,8 @@ const CardInputForm: React.FC<CardInputFormProps> = ({
             name="strength"
             min={-99}
             max={99}
-            value={strength}
-            onChange={onInputChange}
+            value={formData.strength}
+            onChange={handleInputChange}
             className="input-field p-2 border border-gray-300 rounded w-full"
           />
         </div>
@@ -104,15 +132,20 @@ const CardInputForm: React.FC<CardInputFormProps> = ({
           </label>
           <select
             name="range"
-            value={range}
-            onChange={onInputChange}
+            value={formData.range}
+            onChange={handleInputChange}
             className="input-field p-2 border border-gray-300 rounded w-full"
           >
-            <option value="Melee">Melee</option>
-            <option value="Agile">Agile</option>
-            <option value="Ranged">Ranged</option>
-            <option value="Siege">Siege</option>
-            <option value="None">None</option>
+            {formData.type === "Leader" || formData.type === "Special" ? (
+              <option value="None">None</option>
+            ) : (
+              <>
+                <option value="Melee">Melee</option>
+                <option value="Agile">Agile</option>
+                <option value="Ranged">Ranged</option>
+                <option value="Siege">Siege</option>
+              </>
+            )}
           </select>
         </div>
       </div>
@@ -123,28 +156,38 @@ const CardInputForm: React.FC<CardInputFormProps> = ({
           </label>
           <select
             name="ability"
-            value={ability}
-            onChange={onInputChange}
+            value={formData.ability}
+            onChange={handleInputChange}
             className="input-field p-2 border border-gray-300 rounded w-full"
           >
-            <option value="None">None</option>
-            <option value="Avenger">Avenger</option>
-            <option value="Bond">Bond</option>
-            <option value="Horn">Horn</option>
-            <option value="Mardroeme">Mardroeme</option>
-            <option value="Medic">Medic</option>
-            <option value="Morale">Morale</option>
-            <option value="Morph">Morph</option>
-            <option value="Muster">Muster</option>
-            <option value="Scorch">Scorch</option>
-            <option value="ScorchRow">Scorch Row</option>
-            <option value="Spy">Spy</option>
-            <option value="Clear">Clear</option>
-            <option value="Frost">Frost</option>
-            <option value="Fog">Fog</option>
-            <option value="Rain">Rain</option>
-            <option value="Storm">Storm</option>
-            <option value="Decoy">Decoy</option>
+            {formData.type === "Leader" || formData.type === "Special" ? (
+              <>
+                <option value="Clear">Clear</option>
+                <option value="Frost">Frost</option>
+                <option value="Fog">Fog</option>
+                <option value="Rain">Rain</option>
+                <option value="Storm">Storm</option>
+                <option value="Decoy">Decoy</option>
+                <option value="Horn2">Horn</option>
+                <option value="Mardroeme2">Mardroeme</option>
+                <option value="Scorch2">Scorch</option>
+              </>
+            ) : (
+              <>
+                <option value="None">None</option>
+                <option value="Avenger">Avenger</option>
+                <option value="Bond">Bond</option>
+                <option value="Horn">Horn</option>
+                <option value="Mardroeme">Mardroeme</option>
+                <option value="Medic">Medic</option>
+                <option value="Morale">Morale</option>
+                <option value="Morph">Morph</option>
+                <option value="Muster">Muster</option>
+                <option value="Scorch">Scorch</option>
+                <option value="ScorchRow">Scorch Row</option>
+                <option value="Spy">Spy</option>
+              </>
+            )}
           </select>
         </div>
         <div className="flex flex-col flex-1">
