@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Card from "@/components/Card";
 import CardInputForm from "@/components/CardInputForm";
+import { CardData } from "@/constants/cardData";
 
 export default function Home() {
   const [cardData, setCardData] = useState({
@@ -17,9 +18,8 @@ export default function Home() {
     image: "/images/ImageNotFound.png",
   });
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setCardData({ ...cardData, [name]: value });
+  const handleInputChange = (formData: CardData) => {
+    setCardData(formData);
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {

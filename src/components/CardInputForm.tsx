@@ -1,5 +1,6 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { CardData } from "@/constants/cardData";
 
 interface CardInputFormProps {
   name: string;
@@ -10,7 +11,7 @@ interface CardInputFormProps {
   range: string;
   ability: string;
   image: string;
-  onInputChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => void;
+  onInputChange: (formData: CardData) => void;
   onImageChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -22,6 +23,7 @@ const CardInputForm: React.FC<CardInputFormProps> = ({
   strength,
   range,
   ability,
+  image,
   onInputChange,
   onImageChange,
 }) => {
@@ -33,21 +35,35 @@ const CardInputForm: React.FC<CardInputFormProps> = ({
     strength,
     range,
     ability,
+    image,
   });
+
+  useEffect(() => {
+    onInputChange(formData); // Call the passed in onInputChange prop with the updated formData
+  }, [formData, onInputChange]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData((prevData) => {
       const updatedData = { ...prevData, [name]: value };
-      // Reset range when changing the card type
-      if (name === "type" && (value === "Leader" || value === "Special")) {
-        updatedData.range = "None";
-      } else if (name === "type" && formData.range === "None") {
-        updatedData.range = "Melee";
+      if (name === "strength") {
+        if (Number(value) > 99) {
+          updatedData.strength = "99";
+        } else if (Number(value) < -99) {
+          updatedData.strength = "-99";
+        }
+      }
+      if (name === "type") {
+        if (value === "Leader" || value === "Special") {
+          updatedData.range = "None";
+          updatedData.ability = "Clear";
+        } else if (value === "Hero" || value === "Standard") {
+          updatedData.range = "Melee";
+          updatedData.ability = "None";
+        }
       }
       return updatedData;
     });
-    onInputChange(e); // Call the passed in onInputChange prop
   };
 
   return (
