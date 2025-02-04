@@ -34,17 +34,17 @@ export default function Home() {
 
   return (
     <div
-      className="min-h-screen flex flex-col bg-cover bg-center"
+      className="min-h-screen flex flex-col bg-cover bg-center relative"
       style={{ backgroundImage: "url('/images/background.png')" }}
     >
       <header className="w-full p-2 flex justify-center">
         <Image src={"/images/logo.png"} alt={`logo`} width={321} height={210} />
       </header>
-      <main className="container mx-auto p-4 flex-grow flex flex-col md:flex-row">
-        <div className="flex-1 p-4 flex justify-center items-center">
+      <main className="container relative mx-auto p-2 flex-grow flex flex-col md:flex-row">
+        <div className="flex-1 p-2 flex justify-center items-center">
           <Card {...cardData} />
         </div>
-        <div className="flex-1 p-4 flex justify-center items-center">
+        <div className="flex-1 p-2 flex justify-center items-center">
           <CardInputForm {...cardData} onInputChange={handleInputChange} onImageChange={handleImageChange} />
         </div>
       </main>

@@ -91,7 +91,7 @@ const Card: React.FC<CardData> = ({ name, quote, faction, type, strength, range,
         className={`absolute top-[456px] left-0 w-full text-center text-black font-calibri text-lg font-semibold ${
           faction !== "Neutral" ? "pl-16" : ""
         }`}
-        style={{ textShadow: "3px 1px 1px white" }}
+        style={{ textShadow: "3px 1px 1px white", overflow: "hidden", textOverflow: "ellipsis" }}
       >
         {name}
       </p>
@@ -104,7 +104,7 @@ const Card: React.FC<CardData> = ({ name, quote, faction, type, strength, range,
         className={`absolute top-[490px] left-0 px-[10px] w-full text-center text-black font-calibri italic leading-tight ${
           faction !== "Neutral" ? "pl-20 pr-4" : "px-4"
         }`}
-        style={{ textShadow: "3px 1px 1px white" }}
+        style={{ textShadow: "3px 1px 1px white", overflow: "hidden", textOverflow: "ellipsis" }}
       >
         &quot;{quote}&quot;
       </p>

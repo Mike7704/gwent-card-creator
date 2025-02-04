@@ -9,7 +9,6 @@ export const factionBorders = {
 
 export const typeBorders = {
   Hero: "/images/border/border_hero.png",
-  Leader: "/images/border/border_special.png",
   Special: "/images/border/border_special.png",
 };
 
@@ -45,14 +44,12 @@ export const abilityIcons = {
 
 export const typePanelNoBanner = {
   Standard: "/images/type/card_description.png",
-  Leader: "/images/type/card_description.png",
   Special: "/images/type/card_description.png",
   Hero: "/images/type/card_hero_description.png",
 };
 
 export const typePanelBanner = {
   Standard: "/images/type/card_description_banner.png",
-  Leader: "/images/type/card_description_banner.png",
   Special: "/images/type/card_description_banner.png",
   Hero: "/images/type/card_hero_description_banner.png",
 };

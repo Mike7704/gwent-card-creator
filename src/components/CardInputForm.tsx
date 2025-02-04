@@ -54,10 +54,10 @@ const CardInputForm: React.FC<CardInputFormProps> = ({
         }
       }
       if (name === "type") {
-        if (value === "Leader" || value === "Special") {
+        if (value === "Special") {
           updatedData.range = "None";
           updatedData.ability = "Clear";
-        } else if (value === "Hero" || value === "Standard") {
+        } else if ((value === "Hero" || value === "Standard") && formData.type === "Special") {
           updatedData.range = "Melee";
           updatedData.ability = "None";
         }
@@ -75,9 +75,10 @@ const CardInputForm: React.FC<CardInputFormProps> = ({
         <input
           type="text"
           name="name"
+          maxLength={28}
           value={formData.name}
           onChange={handleInputChange}
-          className="input-field p-2 border border-gray-300 rounded"
+          className="p-2 border border-gray-300 rounded"
         />
       </div>
       <div className="flex flex-col">
@@ -88,7 +89,7 @@ const CardInputForm: React.FC<CardInputFormProps> = ({
           name="quote"
           value={formData.quote}
           onChange={handleInputChange}
-          className="input-field p-2 border border-gray-300 rounded"
+          className="p-2 border border-gray-300 rounded"
         ></textarea>
       </div>
       <div className="flex space-x-4">
@@ -100,7 +101,7 @@ const CardInputForm: React.FC<CardInputFormProps> = ({
             name="faction"
             value={formData.faction}
             onChange={handleInputChange}
-            className="input-field p-2 border border-gray-300 rounded w-full"
+            className="p-2 border border-gray-300 rounded w-full"
           >
             <option value="Neutral">Neutral</option>
             <option value="Northern Realms">Northern Realms</option>
@@ -118,12 +119,11 @@ const CardInputForm: React.FC<CardInputFormProps> = ({
             name="type"
             value={formData.type}
             onChange={handleInputChange}
-            className="input-field p-2 border border-gray-300 rounded w-full"
+            className="p-2 border border-gray-300 rounded w-full"
           >
             <option value="Standard">Standard</option>
             <option value="Hero">Hero</option>
             <option value="Special">Special</option>
-            <option value="Leader">Leader</option>
           </select>
         </div>
       </div>
@@ -139,7 +139,7 @@ const CardInputForm: React.FC<CardInputFormProps> = ({
             max={99}
             value={formData.strength}
             onChange={handleInputChange}
-            className="input-field p-2 border border-gray-300 rounded w-full"
+            className="p-2 border border-gray-300 rounded w-full"
           />
         </div>
         <div className="flex flex-col flex-1">
@@ -150,9 +150,9 @@ const CardInputForm: React.FC<CardInputFormProps> = ({
             name="range"
             value={formData.range}
             onChange={handleInputChange}
-            className="input-field p-2 border border-gray-300 rounded w-full"
+            className="p-2 border border-gray-300 rounded w-full"
           >
-            {formData.type === "Leader" || formData.type === "Special" ? (
+            {formData.type === "Special" ? (
               <option value="None">None</option>
             ) : (
               <>
@@ -174,9 +174,9 @@ const CardInputForm: React.FC<CardInputFormProps> = ({
             name="ability"
             value={formData.ability}
             onChange={handleInputChange}
-            className="input-field p-2 border border-gray-300 rounded w-full"
+            className="p-2 border border-gray-300 rounded w-full"
           >
-            {formData.type === "Leader" || formData.type === "Special" ? (
+            {formData.type === "Special" ? (
               <>
                 <option value="Clear">Clear</option>
                 <option value="Frost">Frost</option>
@@ -214,7 +214,7 @@ const CardInputForm: React.FC<CardInputFormProps> = ({
             type="file"
             name="image"
             onChange={onImageChange}
-            className="input-field p-2 border border-gray-300 rounded w-full"
+            className="p-1 border border-gray-300 rounded w-full bg-white text-black"
           />
         </div>
       </div>
