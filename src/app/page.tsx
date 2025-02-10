@@ -7,6 +7,7 @@ import CardInputForm from "@/components/CardInputForm";
 import { CardData } from "@/constants/cardData";
 
 export default function Home() {
+  // State to hold card data
   const [cardData, setCardData] = useState({
     name: "",
     quote: "",
@@ -15,18 +16,20 @@ export default function Home() {
     strength: "0",
     range: "Melee",
     ability: "None",
-    image: "/images/ImageNotFound.png",
+    image: "/images/ImageNotFound.png", // Default image if none is uploaded
   });
 
+  // Handler for input changes in the form
   const handleInputChange = (formData: CardData) => {
     setCardData(formData);
   };
 
+  // Handler for image uploads
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const reader = new FileReader();
       reader.onload = (event) => {
-        setCardData({ ...cardData, image: event.target?.result as string });
+        setCardData((prevData) => ({ ...prevData, image: event.target?.result as string }));
       };
       reader.readAsDataURL(e.target.files[0]);
     }

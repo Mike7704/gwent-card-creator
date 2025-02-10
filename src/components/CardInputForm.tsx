@@ -15,6 +15,7 @@ interface CardInputFormProps {
   onImageChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
+// Form to input card data
 const CardInputForm: React.FC<CardInputFormProps> = ({
   name,
   quote,
@@ -27,6 +28,7 @@ const CardInputForm: React.FC<CardInputFormProps> = ({
   onInputChange,
   onImageChange,
 }) => {
+  // State to manage form input data
   const [formData, setFormData] = useState({
     name,
     quote,
@@ -38,14 +40,17 @@ const CardInputForm: React.FC<CardInputFormProps> = ({
     image,
   });
 
+  // Listen for changes in form data
   useEffect(() => {
-    onInputChange(formData); // Call the passed in onInputChange prop with the updated formData
+    onInputChange(formData);
   }, [formData, onInputChange]);
 
+  // Handles input field changes
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData((prevData) => {
       const updatedData = { ...prevData, [name]: value };
+      // Restricts strength value between -99 and 99
       if (name === "strength") {
         if (Number(value) > 99) {
           updatedData.strength = "99";
@@ -53,6 +58,7 @@ const CardInputForm: React.FC<CardInputFormProps> = ({
           updatedData.strength = "-99";
         }
       }
+      // Sets range and ability based on card type
       if (name === "type") {
         if (value === "Special") {
           updatedData.range = "None";
@@ -64,6 +70,24 @@ const CardInputForm: React.FC<CardInputFormProps> = ({
       }
       return updatedData;
     });
+  };
+
+  // Handles image file upload and updates state with the image data URL
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+
+      reader.onloadend = () => {
+        setFormData((prevData) => ({
+          ...prevData,
+          image: reader.result as string, // Convert file to Data URL
+        }));
+      };
+
+      reader.readAsDataURL(file);
+      onImageChange(e);
+    }
   };
 
   return (
@@ -213,7 +237,8 @@ const CardInputForm: React.FC<CardInputFormProps> = ({
           <input
             type="file"
             name="image"
-            onChange={onImageChange}
+            accept="image/*"
+            onChange={handleImageChange}
             className="p-1 border border-gray-300 rounded w-full bg-white text-black"
           />
         </div>

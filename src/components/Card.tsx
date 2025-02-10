@@ -12,9 +12,11 @@ import {
   factionBanner,
 } from "@/constants/cardImagePaths";
 
+// Display card and all its components
 const Card: React.FC<CardData> = ({ name, quote, faction, type, strength, range, ability, image }) => {
-  const cardImage = image || "/images/ImageNotFound.png";
+  const cardImage = image || "/images/ImageNotFound.png"; // Use default image if none is uploaded
 
+  // Get an image with a set width and height
   const getImage = (
     images: { [key: string]: string },
     key: string,
